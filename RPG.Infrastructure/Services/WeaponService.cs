@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RPG.Application.Services;
-using RPG.Domain.Model;
+using RPG.Domain.Model.Game;
 using RPG.Infrastructure.DataAccess;
 
 namespace RPG.Infrastructure.Services
