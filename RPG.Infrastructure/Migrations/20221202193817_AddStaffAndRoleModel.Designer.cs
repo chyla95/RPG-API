@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RPG.Infrastructure.DataAccess;
 
@@ -11,9 +12,11 @@ using RPG.Infrastructure.DataAccess;
 namespace RPG.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221202193817_AddStaffAndRoleModel")]
+    partial class AddStaffAndRoleModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,11 +117,6 @@ namespace RPG.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -224,7 +222,7 @@ namespace RPG.Infrastructure.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("RPG.Domain.Model.General.StaffMember", b =>
+            modelBuilder.Entity("RPG.Domain.Model.General.Staff", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -237,29 +235,14 @@ namespace RPG.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("StaffMembers");
-                });
+                    b.HasIndex("RoleId");
 
-            modelBuilder.Entity("RoleStaffMember", b =>
-                {
-                    b.Property<int>("RolesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("staffMembersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RolesId", "staffMembersId");
-
-                    b.HasIndex("staffMembersId");
-
-                    b.ToTable("RoleStaffMember");
+                    b.ToTable("Staff");
                 });
 
             modelBuilder.Entity("RPG.Domain.Model.Game.NonPlayerCharacter", b =>
@@ -292,19 +275,15 @@ namespace RPG.Infrastructure.Migrations
                     b.Navigation("Weapon");
                 });
 
-            modelBuilder.Entity("RoleStaffMember", b =>
+            modelBuilder.Entity("RPG.Domain.Model.General.Staff", b =>
                 {
-                    b.HasOne("RPG.Domain.Model.General.Role", null)
+                    b.HasOne("RPG.Domain.Model.General.Role", "Role")
                         .WithMany()
-                        .HasForeignKey("RolesId")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RPG.Domain.Model.General.StaffMember", null)
-                        .WithMany()
-                        .HasForeignKey("staffMembersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("RPG.Domain.Model.Game.Player", b =>

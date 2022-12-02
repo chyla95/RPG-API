@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RPG.Domain.Model;
+using RPG.Domain.Model.Game;
+using RPG.Domain.Model.General;
 
 namespace RPG.Infrastructure.DataAccess
 {
@@ -7,8 +8,16 @@ namespace RPG.Infrastructure.DataAccess
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<Player> Players { get; set; }
+        public DbSet<PlayerCharacter> PlayerCharacters { get; set; }
+        public DbSet<Class> Classes { get; set; }
+        public DbSet<NonPlayerCharacter> NonPlayerCharacters { get; set; }
         public DbSet<Weapon> Weapons { get; set; }
+
+
+        public DbSet<StaffMember> StaffMembers { get; set; }
+        public DbSet<Role> Roles { get; set; }
+
 
     }
 }

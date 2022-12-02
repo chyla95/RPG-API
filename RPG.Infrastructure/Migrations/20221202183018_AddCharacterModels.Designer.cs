@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RPG.Infrastructure.DataAccess;
 
@@ -11,9 +12,11 @@ using RPG.Infrastructure.DataAccess;
 namespace RPG.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221202183018_AddCharacterModels")]
+    partial class AddCharacterModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,11 +121,6 @@ namespace RPG.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Players");
@@ -206,62 +204,6 @@ namespace RPG.Infrastructure.Migrations
                     b.ToTable("Weapons");
                 });
 
-            modelBuilder.Entity("RPG.Domain.Model.General.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("RPG.Domain.Model.General.StaffMember", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("StaffMembers");
-                });
-
-            modelBuilder.Entity("RoleStaffMember", b =>
-                {
-                    b.Property<int>("RolesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("staffMembersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RolesId", "staffMembersId");
-
-                    b.HasIndex("staffMembersId");
-
-                    b.ToTable("RoleStaffMember");
-                });
-
             modelBuilder.Entity("RPG.Domain.Model.Game.NonPlayerCharacter", b =>
                 {
                     b.HasOne("RPG.Domain.Model.Game.Weapon", "Weapon")
@@ -290,21 +232,6 @@ namespace RPG.Infrastructure.Migrations
                     b.Navigation("Class");
 
                     b.Navigation("Weapon");
-                });
-
-            modelBuilder.Entity("RoleStaffMember", b =>
-                {
-                    b.HasOne("RPG.Domain.Model.General.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RPG.Domain.Model.General.StaffMember", null)
-                        .WithMany()
-                        .HasForeignKey("staffMembersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("RPG.Domain.Model.Game.Player", b =>

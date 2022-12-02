@@ -1,19 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using RPG.Domain.Model.General;
 
-namespace RPG.Domain.Model
+namespace RPG.Domain.Model.Game
 {
 #pragma warning disable CS8618
-    public class Weapon
+    public class Weapon : Entity
     {
-        [Key]
-        public int Id { get; set; }
-
         [Required]
-        [MinLength(1), MaxLength(30)]
+        [MinLength(1), MaxLength(50)]
         public string Name { get; set; }
-
         [Required]
-        [Range(0, int.MaxValue)]
+        [Range(1, int.MaxValue)]
         public int Damage { get; set; }
     }
 #pragma warning restore CS8618
