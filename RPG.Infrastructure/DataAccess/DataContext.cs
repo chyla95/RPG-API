@@ -12,5 +12,5 @@ namespace RPG.Infrastructure.DataAccess
 
     }
 }
-// dotnet ef migrations add MigrationName --project .\RPG.Infrastructure\ -s .\RPG.API.User\
-// dotnet ef database update --project .\RPG.Infrastructure\ -s .\RPG.API.User\
+// dotnet ef migrations add MigrationName --project .\RPG.Infrastructure\ -s .\RPG.API.Public\
+// dotnet ef database update --project .\RPG.Infrastructure\ -s .\RPG.API.Public\
