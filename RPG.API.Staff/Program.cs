@@ -1,6 +1,7 @@
+using System.Text.Json.Serialization;
 using RPG.Infrastructure;
 
-namespace RPG.API.Public
+namespace RPG.API.Staff
 {
     public class Program
     {
@@ -13,6 +14,9 @@ namespace RPG.API.Public
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddInfrastructureServices(builder.Configuration);
+
+            builder.Services.AddMvc()
+                .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
             // Configure the HTTP request pipeline.
             WebApplication app = builder.Build();

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using RPG.Application.Services;
-using RPG.Domain.Model;
+using RPG.Domain.Model.Game;
 
 namespace RPG.API.User.Controllers
 {
