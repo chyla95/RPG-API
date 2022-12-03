@@ -13,17 +13,19 @@ namespace RPG.Infrastructure
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            // AddEntity Database
+            services.AddAutoMapper(typeof(ServiceConfigurator).Assembly);
+
+            // Add Database
             string? databaseConnectionString = configuration.GetConnectionString("DatabaseConnection");
-            if (databaseConnectionString == null) throw new Exception("Database connection string not found!");
+            if (databaseConnectionString == null) throw new NullReferenceException(nameof(databaseConnectionString));
             services.AddDbContext<DataContext>(options => options.UseSqlServer(databaseConnectionString));
 
-            // AddEntity Services
-            services.AddScoped<IWeaponService, WeaponService>();
-
-            services.AddScoped<IRepository<StaffMember>, Repository<StaffMember>>();
-
+            // Add Repositories
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            // Add Services
+            services.AddScoped<IStaffMemberService, StaffMemberService>();
+            services.AddScoped<IWeaponService, WeaponService>();
 
             return services;
         }
