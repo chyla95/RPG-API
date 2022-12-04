@@ -9,7 +9,7 @@ namespace RPG.Domain.Model.General
         [MinLength(3), MaxLength(30)]
         public string Name { get; set; }
 
-        public IEnumerable<StaffMember> staffMembers { get; set; }
+        public IEnumerable<Staff> Staff { get; set; }
 
         // TODO: Add Premissions
     }

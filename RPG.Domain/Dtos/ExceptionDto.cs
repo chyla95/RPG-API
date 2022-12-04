@@ -1,4 +1,4 @@
-﻿namespace dotnet_rpg.Dtos
+﻿namespace RPG.Domain.Dtos
 {
 #pragma warning disable CS8618
     public class HttpExceptionMessageDto

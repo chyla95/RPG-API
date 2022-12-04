@@ -1,7 +1,7 @@
 ﻿namespace RPG.Domain.Model.General
 {
 #pragma warning disable CS8618
-    public class StaffMember : User
+    public class Staff : User
     {
         public IEnumerable<Role> Roles { get; set; }
     }
