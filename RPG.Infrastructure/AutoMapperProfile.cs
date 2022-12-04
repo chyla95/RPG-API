@@ -4,7 +4,7 @@ using RPG.Domain.Dtos.Battle;
 using RPG.Domain.Dtos.Class;
 using RPG.Domain.Dtos.NonPlayerCharacter;
 using RPG.Domain.Dtos.PlayerCharacter;
-using RPG.Domain.Dtos.StaffMember;
+using RPG.Domain.Dtos.Staff;
 using RPG.Domain.Dtos.Weapon;
 using RPG.Domain.Exceptions;
 using RPG.Domain.Model.Game;

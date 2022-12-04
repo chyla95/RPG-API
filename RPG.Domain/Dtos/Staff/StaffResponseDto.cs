@@ -1,4 +1,4 @@
-﻿namespace RPG.Domain.Dtos.StaffMember
+﻿namespace RPG.Domain.Dtos.Staff
 {
 #pragma warning disable CS8618
     public class StaffResponseDto

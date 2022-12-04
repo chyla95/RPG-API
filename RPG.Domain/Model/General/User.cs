@@ -1,4 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
 using BC = BCrypt.Net.BCrypt;
 
 namespace RPG.Domain.Model.General
@@ -27,6 +30,29 @@ namespace RPG.Domain.Model.General
         {
             bool doesPasswordMatch = BC.Verify(password, Password);
             return doesPasswordMatch;
+        }
+        public string CreateJwtToken(string JwtTokenSecret)
+        {
+            List<Claim> jwtTokenClaims = new()
+            {
+                new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
+                new Claim("userId", Id.ToString()),
+            };
+
+            SymmetricSecurityKey symmetricSecurityKey = new(System.Text.Encoding.UTF8.GetBytes(JwtTokenSecret));
+            SigningCredentials signingCredentials = new(symmetricSecurityKey, SecurityAlgorithms.HmacSha512Signature);
+            SecurityTokenDescriptor securityTokenDescriptor = new()
+            {
+                Subject = new ClaimsIdentity(jwtTokenClaims),
+                Expires = DateTime.Now.AddDays(30),
+                SigningCredentials = signingCredentials
+            };
+
+            JwtSecurityTokenHandler jwtSecurityTokenHandler = new();
+            SecurityToken securityToken = jwtSecurityTokenHandler.CreateToken(securityTokenDescriptor);
+
+            string JwtToken = jwtSecurityTokenHandler.WriteToken(securityToken);
+            return JwtToken;
         }
     }
 #pragma warning restore CS8618
