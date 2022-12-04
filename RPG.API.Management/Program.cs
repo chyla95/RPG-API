@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 using RPG.API.Management.Middlewares;
 using RPG.API.Management.Utilities;
 using RPG.API.Management.Utilities.Wrappers;
+using RPG.Domain.Model.General;
 using RPG.Infrastructure;
 using Swashbuckle.AspNetCore.Filters;
 
