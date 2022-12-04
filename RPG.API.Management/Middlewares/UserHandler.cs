@@ -14,16 +14,16 @@ namespace RPG.API.Management.Middlewares
             _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext httpContext, IStaffService staffMemberService)
+        public async Task InvokeAsync(HttpContext httpContext, IStaffService staffService)
         {
             string userIdClaimValue = httpContext.User.FindFirstValue("userId");
             if (!string.IsNullOrEmpty(userIdClaimValue))
             {
                 int userId = int.Parse(userIdClaimValue);
-                Domain.Model.General.Staff? user = await staffMemberService.GetOne(userId);
-                if (user == null) throw new HttpNotFoundException($"User with ID of {userId} does not exist!");
+                Staff? staff = await staffService.GetOne(userId);
+                if (staff == null) throw new HttpNotFoundException($"User with ID of {userId} does not exist!");
 
-                httpContext.Features.Set(user);
+                httpContext.Features.Set(staff);
             }
 
             await _next(httpContext);
