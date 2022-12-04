@@ -6,7 +6,7 @@ namespace RPG.API.Public
     {
         public static void Main(string[] args)
         {
-            // AddEntity services to the container.
+            // Add Entity services to the container.
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
