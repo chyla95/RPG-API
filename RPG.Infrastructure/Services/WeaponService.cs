@@ -14,9 +14,9 @@ namespace RPG.Infrastructure.Services
             _dataContext = dataContext;
         }
 
-        public async Task<Weapon> GetWeapon(int id)
+        public async Task<Weapon?> GetWeapon(int id)
         {
-            Weapon weapon = await _dataContext.Weapons.SingleAsync(w => w.Id == id);
+            Weapon? weapon = await _dataContext.Weapons.SingleOrDefaultAsync(w => w.Id == id);
             return weapon;
         }
     }
