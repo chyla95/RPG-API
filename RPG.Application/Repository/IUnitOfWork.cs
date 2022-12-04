@@ -1,10 +1,11 @@
-﻿using RPG.Domain.Model.General;
+﻿using RPG.Application.Repository;
 
 namespace RPG.Infrastructure.DataAccess.Repository
 {
     public interface IUnitOfWork
     {
-        IRepository<StaffMember> Staff { get; }
+        IStaffRepository StaffRepository { get; }
+        IRoleRepository RoleRepository { get; }
 
         Task SaveChanges();
     }

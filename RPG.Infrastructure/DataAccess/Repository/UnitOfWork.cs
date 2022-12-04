@@ -1,4 +1,4 @@
-﻿using RPG.Domain.Model.General;
+﻿using RPG.Application.Repository;
 
 namespace RPG.Infrastructure.DataAccess.Repository
 {
@@ -6,12 +6,15 @@ namespace RPG.Infrastructure.DataAccess.Repository
     {
         private readonly DataContext _dataContext;
 
-        public IRepository<StaffMember> Staff { get; private set; }
+        public IStaffRepository StaffRepository { get; private set; }
+        public IRoleRepository RoleRepository { get; private set; }
 
         public UnitOfWork(DataContext dataContext)
         {
             _dataContext = dataContext;
-            Staff = new Repository<StaffMember>(_dataContext);
+
+            StaffRepository = new StaffRepository(_dataContext);
+            RoleRepository = new RoleRepository(_dataContext);
         }
 
         public async Task SaveChanges()

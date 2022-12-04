@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using dotnet_rpg.Dtos;
+using RPG.Domain.Dtos;
 using RPG.Domain.Dtos.Battle;
 using RPG.Domain.Dtos.Class;
 using RPG.Domain.Dtos.NonPlayerCharacter;
@@ -18,8 +18,11 @@ namespace dotnet_rpg.Utilities
         {
             // DTOs - business
 
-            CreateMap<StaffMemberRequestDto, StaffMember>();
-            CreateMap<StaffMember, StaffMemberResponseDto>();
+            CreateMap<StaffRequestDto, Staff>();
+            CreateMap<Staff, StaffResponseDto>();
+
+            CreateMap<RoleRequestDto, Role>();
+            CreateMap<Role, RoleResponseDto>();
 
             CreateMap<PlayerCharacterRequestDto, PlayerCharacter>();
             CreateMap<PlayerCharacter, PlayerCharacterResponseDto>();
@@ -41,22 +44,21 @@ namespace dotnet_rpg.Utilities
             CreateMap<HttpException, HttpExceptionDto>();
             CreateMap<HttpExceptionMessage, HttpExceptionMessageDto>();
 
-            // Objects
+            // E2E
+            CreateMap<Role, Role>()
+                .ForMember(e => e.Id, opt => opt.Ignore());
+
             CreateMap<PlayerCharacter, PlayerCharacter>()
-                .ForMember(u => u.Id, opt => opt.Ignore())
-                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+                .ForMember(e => e.Id, opt => opt.Ignore());
 
             CreateMap<Weapon, Weapon>()
-                .ForMember(u => u.Id, opt => opt.Ignore())
-                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+                .ForMember(e => e.Id, opt => opt.Ignore());
 
             CreateMap<NonPlayerCharacter, NonPlayerCharacter>()
-                .ForMember(u => u.Id, opt => opt.Ignore())
-                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+                .ForMember(e => e.Id, opt => opt.Ignore());
 
             CreateMap<Class, Class>()
-                .ForMember(u => u.Id, opt => opt.Ignore())
-                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+                .ForMember(e => e.Id, opt => opt.Ignore());
         }
     }
 }

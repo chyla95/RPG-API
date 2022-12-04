@@ -15,7 +15,7 @@ namespace RPG.Infrastructure.DataAccess
         public DbSet<Weapon> Weapons { get; set; }
 
 
-        public DbSet<StaffMember> StaffMembers { get; set; }
+        public DbSet<Staff> Staff { get; set; }
         public DbSet<Role> Roles { get; set; }
 
 
