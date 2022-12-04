@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RPG.Application.Services;
-using RPG.Domain.Dtos.StaffMember;
+using RPG.Domain.Dtos.Staff;
 using RPG.Domain.Exceptions;
 using RPG.Domain.Model.General;
 
