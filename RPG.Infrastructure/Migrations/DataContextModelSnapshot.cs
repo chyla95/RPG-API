@@ -224,7 +224,7 @@ namespace RPG.Infrastructure.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("RPG.Domain.Model.General.StaffMember", b =>
+            modelBuilder.Entity("RPG.Domain.Model.General.Staff", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -244,22 +244,22 @@ namespace RPG.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StaffMembers");
+                    b.ToTable("Staff");
                 });
 
-            modelBuilder.Entity("RoleStaffMember", b =>
+            modelBuilder.Entity("RoleStaff", b =>
                 {
                     b.Property<int>("RolesId")
                         .HasColumnType("int");
 
-                    b.Property<int>("staffMembersId")
+                    b.Property<int>("StaffId")
                         .HasColumnType("int");
 
-                    b.HasKey("RolesId", "staffMembersId");
+                    b.HasKey("RolesId", "StaffId");
 
-                    b.HasIndex("staffMembersId");
+                    b.HasIndex("StaffId");
 
-                    b.ToTable("RoleStaffMember");
+                    b.ToTable("RoleStaff");
                 });
 
             modelBuilder.Entity("RPG.Domain.Model.Game.NonPlayerCharacter", b =>
@@ -292,7 +292,7 @@ namespace RPG.Infrastructure.Migrations
                     b.Navigation("Weapon");
                 });
 
-            modelBuilder.Entity("RoleStaffMember", b =>
+            modelBuilder.Entity("RoleStaff", b =>
                 {
                     b.HasOne("RPG.Domain.Model.General.Role", null)
                         .WithMany()
@@ -300,9 +300,9 @@ namespace RPG.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RPG.Domain.Model.General.StaffMember", null)
+                    b.HasOne("RPG.Domain.Model.General.Staff", null)
                         .WithMany()
-                        .HasForeignKey("staffMembersId")
+                        .HasForeignKey("StaffId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
