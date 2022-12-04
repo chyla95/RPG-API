@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using RPG.API.Management.Filters;
 using RPG.API.Management.Middlewares;
 using RPG.API.Management.Utilities;
 using RPG.API.Management.Utilities.Wrappers;
@@ -51,6 +52,7 @@ namespace RPG.API.Management
             builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 
             builder.Services.AddInfrastructureServices(builder.Configuration);
+            builder.Services.AddScoped<AuthorizationFilter>();
 
             // Configure the HTTP request pipeline.
             WebApplication app = builder.Build();
