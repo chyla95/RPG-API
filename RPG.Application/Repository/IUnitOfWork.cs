@@ -8,6 +8,7 @@ namespace RPG.Infrastructure.DataAccess.Repository
         IRoleRepository RoleRepository { get; }
         IWeaponRepository WeaponRepository { get; }
         IClassRepository ClassRepository { get; }
+        INonPlayerCharacterRepository NonPlayerCharacterRepository { get; }
 
         Task SaveChanges();
     }
