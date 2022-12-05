@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RPG.API.Management.Filters;
 using RPG.API.Management.Utilities;
 using RPG.Application.Services;
 using RPG.Domain.Exceptions;
@@ -25,12 +26,12 @@ namespace RPG.API.Management.Controllers
             _currentUser = currentUser;
         }
 
-        [Authorize]
         [HttpGet("Test")]
+        [Authorize]
         public async Task<IActionResult> Test()
         {
             Debug.WriteLine(_currentUser.GetCurrentUser().Id + " / " + _currentUser.GetCurrentUser().Roles.ToList().Count);
-            Weapon? weapon = await _weaponService.GetWeapon(1);
+            Weapon? weapon = await _weaponService.GetOne(1);
             if (weapon == null) throw new HttpNotFoundException("Weapon not found!");
             return Ok(weapon);
         }

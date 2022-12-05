@@ -25,8 +25,8 @@ namespace RPG.Infrastructure
             // AddOne Services
             services.AddScoped<IStaffService, StaffService>();
             services.AddScoped<IRoleService, RoleService>();
-
             services.AddScoped<IWeaponService, WeaponService>();
+            services.AddScoped<IClassService, ClassService>();
 
             return services;
         }

@@ -2,13 +2,8 @@
 
 namespace RPG.Application.Services
 {
-    public interface IStaffService
+    public interface IStaffService : IService<Staff>
     {
-        Task<IEnumerable<Staff>> GetMany();
-        Task<Staff?> GetOne(int id);
         Task<Staff?> GetOne(string email);
-        Task AddOne(Staff user);
-        Task UpdateOne(Staff user);
-        Task RemoveOne(Staff user);
     }
 }

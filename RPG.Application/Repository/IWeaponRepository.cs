@@ -1,9 +1,9 @@
-﻿using RPG.Domain.Model.General;
+﻿using RPG.Domain.Model.Game;
 using RPG.Infrastructure.DataAccess.Repository;
 
 namespace RPG.Application.Repository
 {
-    public interface IStaffRepository : IRepository<Staff>
+    public interface IWeaponRepository : IRepository<Weapon>
     {
     }
 }

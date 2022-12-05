@@ -1,23 +1,46 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RPG.Application.Services;
+﻿using RPG.Application.Services;
 using RPG.Domain.Model.Game;
-using RPG.Infrastructure.DataAccess;
+using RPG.Infrastructure.DataAccess.Repository;
 
 namespace RPG.Infrastructure.Services
 {
     public class WeaponService : IWeaponService
     {
-        private readonly DataContext _dataContext;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public WeaponService(DataContext dataContext)
+        public WeaponService(IUnitOfWork unitOfWork)
         {
-            _dataContext = dataContext;
+            _unitOfWork = unitOfWork;
         }
 
-        public async Task<Weapon?> GetWeapon(int id)
+        public async Task<IEnumerable<Weapon>> GetMany()
         {
-            Weapon? weapon = await _dataContext.Weapons.SingleOrDefaultAsync(w => w.Id == id);
+            IEnumerable<Weapon> weapon = await _unitOfWork.WeaponRepository.GetMany("Class");
             return weapon;
+        }
+
+        public async Task<Weapon?> GetOne(int id)
+        {
+            Weapon? weapon = await _unitOfWork.WeaponRepository.GetOne(u => u.Id == id, "Class");
+            return weapon;
+        }
+
+        public async Task AddOne(Weapon weapon)
+        {
+            _unitOfWork.WeaponRepository.AddOne(weapon);
+            await _unitOfWork.SaveChanges();
+        }
+
+        public async Task UpdateOne(Weapon weapon)
+        {
+            _unitOfWork.WeaponRepository.UpdateOne(weapon);
+            await _unitOfWork.SaveChanges();
+        }
+
+        public async Task RemoveOne(Weapon weapon)
+        {
+            _unitOfWork.WeaponRepository.RemoveOne(weapon);
+            await _unitOfWork.SaveChanges();
         }
     }
 }

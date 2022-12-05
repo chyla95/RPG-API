@@ -19,7 +19,7 @@ namespace RPG.API.User.Controllers
         [HttpGet("Test")]
         public async Task<IActionResult> Test()
         {
-            Weapon? weapon = await _weaponService.GetWeapon(1);
+            Weapon? weapon = await _weaponService.GetOne(1);
             if (weapon == null) throw new HttpNotFoundException("Weapon not found!");
             return Ok(weapon);
         }

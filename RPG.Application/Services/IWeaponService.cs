@@ -2,8 +2,7 @@
 
 namespace RPG.Application.Services
 {
-    public interface IWeaponService
+    public interface IWeaponService: IService<Weapon>
     {
-        Task<Weapon?> GetWeapon(int id);
     }
 }

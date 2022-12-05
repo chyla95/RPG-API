@@ -8,6 +8,8 @@ namespace RPG.Infrastructure.DataAccess.Repository
 
         public IStaffRepository StaffRepository { get; private set; }
         public IRoleRepository RoleRepository { get; private set; }
+        public IWeaponRepository WeaponRepository { get; private set; }
+        public IClassRepository ClassRepository { get; private set; }
 
         public UnitOfWork(DataContext dataContext)
         {
@@ -15,6 +17,8 @@ namespace RPG.Infrastructure.DataAccess.Repository
 
             StaffRepository = new StaffRepository(_dataContext);
             RoleRepository = new RoleRepository(_dataContext);
+            WeaponRepository = new WeaponRepository(_dataContext);
+            ClassRepository = new ClassRepository(_dataContext);
         }
 
         public async Task SaveChanges()

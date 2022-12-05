@@ -12,6 +12,9 @@ namespace RPG.Domain.Model.Game
         [Required]
         [Range(1, int.MaxValue)]
         public int Damage { get; set; }
+
+        [Required]
+        public Class Class { get; set; }
     }
 #pragma warning restore CS8618
 }
