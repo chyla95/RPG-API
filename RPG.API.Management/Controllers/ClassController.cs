@@ -44,8 +44,8 @@ namespace RPG.API.Management.Controllers
         [HttpPost]
         public async Task<ActionResult<ClassResponseDto>> AddOne(ClassRequestDto classRequestDto)
         {
-            Class? isNameTaken = await _classService.GetOne(classRequestDto.Name);
-            if (isNameTaken != null) throw new HttpBadRequestException("Class with this name already exists!");
+            bool isNameTaken = await _classService.IsNameTaken(classRequestDto.Name);
+            if (isNameTaken) throw new HttpBadRequestException("Class with this name already exists!");
 
             Class @class = _mapper.Map<Class>(classRequestDto);
             await _classService.AddOne(@class);
@@ -57,8 +57,8 @@ namespace RPG.API.Management.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<ClassResponseDto>> UpdateOne(int id, ClassRequestDto classRequestDto)
         {
-            Class? isNameTaken = await _classService.GetOne(classRequestDto.Name);
-            if (isNameTaken != null) throw new HttpBadRequestException("Class with this name already exists!");
+            bool isNameTaken = await _classService.IsNameTaken(classRequestDto.Name, id);
+            if (isNameTaken) throw new HttpBadRequestException("Class with this name already exists!");
 
             Class? @class = await _classService.GetOne(id);
             if (@class == null) throw new HttpNotFoundException("Class not found!");
