@@ -44,8 +44,8 @@ namespace RPG.API.Management.Controllers
         [HttpPost]
         public async Task<ActionResult<RoleResponseDto>> AddOne(RoleRequestDto roleRequestDto)
         {
-            Role? isNameTaken = await _roleService.GetOne(roleRequestDto.Name);
-            if (isNameTaken != null) throw new HttpBadRequestException("Role with this name already exists!");
+            bool isNameTaken = await _roleService.IsNameTaken(roleRequestDto.Name);
+            if (isNameTaken) throw new HttpBadRequestException("Role with this name already exists!");
 
             Role role = _mapper.Map<Role>(roleRequestDto);
             await _roleService.AddOne(role);
@@ -60,8 +60,8 @@ namespace RPG.API.Management.Controllers
             Role? role = await _roleService.GetOne(id);
             if (role == null) throw new HttpNotFoundException("Role not found!");
 
-            Role? isNameTaken = await _roleService.GetOne(roleRequestDto.Name);
-            if (isNameTaken != null) throw new HttpBadRequestException("Role with this name already exists!");
+            bool isNameTaken = await _roleService.IsNameTaken(roleRequestDto.Name, id);
+            if (isNameTaken) throw new HttpBadRequestException("Role with this name already exists!");
 
             Role updatedRole = _mapper.Map<Role>(roleRequestDto);           
             await _roleService.UpdateOne(_mapper.Map(updatedRole, role));

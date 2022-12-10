@@ -1,4 +1,5 @@
 ﻿using RPG.Application.Services;
+using RPG.Domain.Model.Game;
 using RPG.Domain.Model.General;
 using RPG.Infrastructure.DataAccess.Repository;
 
@@ -47,6 +48,16 @@ namespace RPG.Infrastructure.Services
         {
             _unitOfWork.RoleRepository.RemoveOne(role);
             await _unitOfWork.SaveChanges();
+        }
+
+        public async Task<bool> IsNameTaken(string name, int? entityId = null)
+        {
+            Role? role;
+            if (entityId != null) role = await _unitOfWork.RoleRepository.GetOne(r => (r.Name == name) && (r.Id != entityId));
+            else role = await _unitOfWork.RoleRepository.GetOne(u => u.Name == name);
+
+            if (role != null) return true;
+            return false;
         }
     }
 }
