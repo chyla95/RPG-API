@@ -5,6 +5,6 @@ namespace RPG.Application.Services
     public interface IStaffService : IService<Staff>
     {
         Task<Staff?> GetOne(string email);
-        Task<bool> IsEmailTaken(string email, int? userId = null);
+        Task<bool> IsEmailTaken(string email, int? entityId = null);
     }
 }

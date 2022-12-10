@@ -48,10 +48,10 @@ namespace RPG.Infrastructure.Services
             await _unitOfWork.SaveChanges();
         }
 
-        public async Task<bool> IsEmailTaken(string email, int? userId = null)
+        public async Task<bool> IsEmailTaken(string email, int? entityId = null)
         {
             Staff? staffMember;
-            if(userId != null) staffMember = await _unitOfWork.StaffRepository.GetOne(u => (u.Email == email) && (u.Id != userId));
+            if(entityId != null) staffMember = await _unitOfWork.StaffRepository.GetOne(u => (u.Email == email) && (u.Id != entityId));
             else staffMember = await _unitOfWork.StaffRepository.GetOne(u => u.Email == email);
 
             if (staffMember != null) return true;
