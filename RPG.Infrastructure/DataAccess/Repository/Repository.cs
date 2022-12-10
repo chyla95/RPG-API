@@ -13,9 +13,10 @@ namespace RPG.Infrastructure.DataAccess.Repository
             _dbSet = dataContext.Set<T>();
         }
 
-        public async Task<IEnumerable<T>> GetMany(string? propertiesToInclude = null)
+        public async Task<IEnumerable<T>> GetMany(string? propertiesToInclude = null, bool isTrackingEnabled = true)
         {
             IQueryable<T> query = _dbSet.Select(e => e);
+            if(!isTrackingEnabled) query.AsNoTracking();
 
             if (!propertiesToInclude.IsNullOrEmpty())
             {
@@ -27,9 +28,10 @@ namespace RPG.Infrastructure.DataAccess.Repository
             }
             return await query.ToListAsync();
         }
-        public async Task<IEnumerable<T>> GetMany(Expression<Func<T, bool>> predicate, string? propertiesToInclude = null)
+        public async Task<IEnumerable<T>> GetMany(Expression<Func<T, bool>> predicate, string? propertiesToInclude = null, bool isTrackingEnabled = true)
         {
             IQueryable<T> query = _dbSet.Where(predicate);
+            if (!isTrackingEnabled) query.AsNoTracking();
 
             if (!propertiesToInclude.IsNullOrEmpty())
             {
@@ -42,9 +44,10 @@ namespace RPG.Infrastructure.DataAccess.Repository
 
             return await query.ToListAsync();
         }
-        public async Task<T?> GetOne(Expression<Func<T, bool>> predicate, string? propertiesToInclude = null)
+        public async Task<T?> GetOne(Expression<Func<T, bool>> predicate, string? propertiesToInclude = null, bool isTrackingEnabled = true)
         {
             IQueryable<T> query = _dbSet.Where(predicate);
+            if (!isTrackingEnabled) query.AsNoTracking();
 
             if (!propertiesToInclude.IsNullOrEmpty())
             {
