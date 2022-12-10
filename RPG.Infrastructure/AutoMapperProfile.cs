@@ -17,9 +17,11 @@ namespace dotnet_rpg.Utilities
         public AutoMapperProfile()
         {
             // DTOs - business
-
             CreateMap<StaffRequestDto, Staff>();
             CreateMap<Staff, StaffResponseDto>();
+
+            CreateMap<PlayerRequestDto, Player>();
+            CreateMap<Player, PlayerResponseDto>();
 
             CreateMap<RoleRequestDto, Role>();
             CreateMap<Role, RoleResponseDto>();
@@ -45,6 +47,12 @@ namespace dotnet_rpg.Utilities
             CreateMap<HttpExceptionMessage, HttpExceptionMessageDto>();
 
             // E2E
+            CreateMap<Staff, Staff>()
+                .ForMember(e => e.Id, opt => opt.Ignore());
+
+            CreateMap<Player, Player>()
+                .ForMember(e => e.Id, opt => opt.Ignore());
+
             CreateMap<Role, Role>()
                 .ForMember(e => e.Id, opt => opt.Ignore());
 

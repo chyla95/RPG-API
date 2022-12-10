@@ -10,6 +10,7 @@ namespace RPG.Infrastructure.DataAccess.Repository
         public IRoleRepository RoleRepository { get; private set; }
         public IWeaponRepository WeaponRepository { get; private set; }
         public IClassRepository ClassRepository { get; private set; }
+        public IPlayerRepository PlayerRepository { get; private set; }
         public INonPlayerCharacterRepository NonPlayerCharacterRepository { get; private set; }
 
         public UnitOfWork(DataContext dataContext)
@@ -21,6 +22,7 @@ namespace RPG.Infrastructure.DataAccess.Repository
             WeaponRepository = new WeaponRepository(_dataContext);
             ClassRepository = new ClassRepository(_dataContext);
             NonPlayerCharacterRepository = new NonPlayerCharacterRepository(_dataContext);
+            PlayerRepository = new PlayerRepository(_dataContext);
         }
 
         public async Task SaveChanges()

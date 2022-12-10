@@ -12,7 +12,9 @@ namespace RPG.Infrastructure.DataAccess
         public DbSet<PlayerCharacter> PlayerCharacters { get; set; }
         public DbSet<Class> Classes { get; set; }
         public DbSet<NonPlayerCharacter> NonPlayerCharacters { get; set; }
+        public DbSet<Item> Items { get; set; }
         public DbSet<Weapon> Weapons { get; set; }
+        public DbSet<DailyQuest> DailyQuests { get; set; }
 
 
         public DbSet<Staff> Staff { get; set; }
