@@ -47,5 +47,15 @@ namespace RPG.Infrastructure.Services
             _unitOfWork.StaffRepository.RemoveOne(user);
             await _unitOfWork.SaveChanges();
         }
+
+        public async Task<bool> IsEmailTaken(string email, int? userId = null)
+        {
+            Staff? staffMember;
+            if(userId != null) staffMember = await _unitOfWork.StaffRepository.GetOne(u => (u.Email == email) && (u.Id != userId));
+            else staffMember = await _unitOfWork.StaffRepository.GetOne(u => u.Email == email);
+
+            if (staffMember != null) return true;
+            return false;
+        }
     }
 }

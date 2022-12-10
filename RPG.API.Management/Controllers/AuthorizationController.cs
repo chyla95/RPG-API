@@ -26,8 +26,8 @@ namespace RPG.API.Management.Controllers
         [HttpPost("SignUp")]
         public async Task<ActionResult<StaffResponseDto>> SignUp(StaffRequestDto staffRequestDto)
         {
-            Staff? isEmailTaken = await _staffService.GetOne(staffRequestDto.Email);
-            if (isEmailTaken != null) throw new HttpBadRequestException("Email adress already in use!");
+            bool isEmailTaken = await _staffService.IsEmailTaken(staffRequestDto.Email);
+            if (isEmailTaken) throw new HttpBadRequestException("Email adress already in use!");
 
             Staff staff = _mapper.Map<Staff>(staffRequestDto);
             await _staffService.AddOne(staff);
