@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RPG.Application.Services;
+using RPG.Domain.Dtos.Class;
 using RPG.Domain.Dtos.Weapon;
 using RPG.Domain.Exceptions;
 using RPG.Domain.Model.Game;
@@ -46,6 +47,9 @@ namespace RPG.API.Management.Controllers
         [HttpPost]
         public async Task<ActionResult<WeaponResponseDto>> AddOne(WeaponRequestDto weaponRequestDto)
         {
+            bool isNameTaken = await _weaponService.IsNameTaken(weaponRequestDto.Name);
+            if (isNameTaken) throw new HttpBadRequestException("Weapon with this name already exists!");
+
             Weapon weapon = _mapper.Map<Weapon>(weaponRequestDto);
             Class? @class = await _classService.GetOne(weaponRequestDto.ClassId);
             if (@class == null) throw new HttpNotFoundException("Class not found!");
@@ -60,6 +64,9 @@ namespace RPG.API.Management.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<WeaponResponseDto>> UpdateOne(int id, WeaponRequestDto weaponRequestDto)
         {
+            bool isNameTaken = await _weaponService.IsNameTaken(weaponRequestDto.Name, id);
+            if (isNameTaken) throw new HttpBadRequestException("Weapon with this name already exists!");
+
             Weapon? weapon = await _weaponService.GetOne(id);
             if (weapon == null) throw new HttpNotFoundException("Weapon not found!");
             Class? @class = await _classService.GetOne(weaponRequestDto.ClassId);

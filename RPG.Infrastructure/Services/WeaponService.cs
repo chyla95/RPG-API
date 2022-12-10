@@ -24,6 +24,11 @@ namespace RPG.Infrastructure.Services
             Weapon? weapon = await _unitOfWork.WeaponRepository.GetOne(u => u.Id == id, "Class");
             return weapon;
         }
+        public async Task<Weapon?> GetOne(string name)
+        {
+            Weapon? weapon = await _unitOfWork.WeaponRepository.GetOne(u => u.Name == name);
+            return weapon;
+        }
 
         public async Task AddOne(Weapon weapon)
         {
@@ -41,6 +46,16 @@ namespace RPG.Infrastructure.Services
         {
             _unitOfWork.WeaponRepository.RemoveOne(weapon);
             await _unitOfWork.SaveChanges();
+        }
+
+        public async Task<bool> IsNameTaken(string name, int? entityId = null)
+        {
+            Weapon? weapon;
+            if (entityId != null) weapon = await _unitOfWork.WeaponRepository.GetOne(c => (c.Name == name) && (c.Id != entityId));
+            else weapon = await _unitOfWork.WeaponRepository.GetOne(u => u.Name == name);
+
+            if (weapon != null) return true;
+            return false;
         }
     }
 }
