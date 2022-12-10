@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RPG.Application.Services;
+using RPG.Domain.Dtos.Class;
 using RPG.Domain.Dtos.NonPlayerCharacter;
 using RPG.Domain.Dtos.Staff;
 using RPG.Domain.Dtos.Weapon;
 using RPG.Domain.Exceptions;
 using RPG.Domain.Model.Game;
 using RPG.Domain.Model.General;
+using RPG.Infrastructure.Services;
 
 namespace RPG.API.Management.Controllers
 {
@@ -49,8 +51,8 @@ namespace RPG.API.Management.Controllers
         [HttpPost]
         public async Task<ActionResult<NonPlayerCharacterResponseDto>> AddOne(NonPlayerCharacterRequestDto nonPlayerCharacterRequestDto)
         {
-            NonPlayerCharacter? isNameTaken = await _nonPlayerCharacterService.GetOne(nonPlayerCharacterRequestDto.Name);
-            if (isNameTaken != null) throw new HttpBadRequestException("NPC with this name already exists!");
+            bool isNameTaken = await _nonPlayerCharacterService.IsNameTaken(nonPlayerCharacterRequestDto.Name);
+            if (isNameTaken) throw new HttpBadRequestException("NPC with this name already exists!");
 
             NonPlayerCharacter nonPlayerCharacter = _mapper.Map<NonPlayerCharacter>(nonPlayerCharacterRequestDto);
             if (nonPlayerCharacterRequestDto.WeaponId != null)
@@ -72,8 +74,8 @@ namespace RPG.API.Management.Controllers
             NonPlayerCharacter? nonPlayerCharacter = await _nonPlayerCharacterService.GetOne(id);
             if (nonPlayerCharacter == null) throw new HttpNotFoundException("NPC not found!");
 
-            NonPlayerCharacter? isNameTaken = await _nonPlayerCharacterService.GetOne(nonPlayerCharacterRequestDto.Name);
-            if (isNameTaken != null) throw new HttpBadRequestException("NPC with this name already exists!");
+            bool isNameTaken = await _nonPlayerCharacterService.IsNameTaken(nonPlayerCharacterRequestDto.Name, id);
+            if (isNameTaken) throw new HttpBadRequestException("NPC with this name already exists!");
 
             NonPlayerCharacter updatedNonPlayerCharacter = _mapper.Map(_mapper.Map<NonPlayerCharacter>(nonPlayerCharacterRequestDto), nonPlayerCharacter);
             if (nonPlayerCharacterRequestDto.WeaponId != null)

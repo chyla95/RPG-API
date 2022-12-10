@@ -49,5 +49,15 @@ namespace RPG.Infrastructure.Services
             _unitOfWork.NonPlayerCharacterRepository.RemoveOne(nonPlayerCharacter);
             await _unitOfWork.SaveChanges();
         }
+
+        public async Task<bool> IsNameTaken(string name, int? entityId = null)
+        {
+            NonPlayerCharacter? nonPlayerCharacter;
+            if (entityId != null) nonPlayerCharacter = await _unitOfWork.NonPlayerCharacterRepository.GetOne(c => (c.Name == name) && (c.Id != entityId));
+            else nonPlayerCharacter = await _unitOfWork.NonPlayerCharacterRepository.GetOne(u => u.Name == name);
+
+            if (nonPlayerCharacter != null) return true;
+            return false;
+        }
     }
 }
