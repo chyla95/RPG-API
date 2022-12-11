@@ -29,6 +29,8 @@ namespace RPG.Infrastructure
             services.AddScoped<IClassService, ClassService>();
             services.AddScoped<INonPlayerCharacterService, NonPlayerCharacterService>();
             services.AddScoped<IPlayerService, PlayerService>();
+            services.AddScoped<IPlayerCharacterService, PlayerCharacterService>();
+            services.AddScoped<IBattleService, BattleService>();
 
             return services;
         }

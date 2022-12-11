@@ -10,6 +10,7 @@ namespace RPG.Infrastructure.DataAccess.Repository
         IClassRepository ClassRepository { get; }
         INonPlayerCharacterRepository NonPlayerCharacterRepository { get; }
         IPlayerRepository PlayerRepository { get; }
+        IPlayerCharacterRepository PlayerCharacterRepository { get; }
 
         Task SaveChanges();
     }

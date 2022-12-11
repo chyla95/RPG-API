@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using RPG.Application.Services;
 using RPG.Domain.Exceptions;
-using RPG.Domain.Model.General;
+using RPG.Domain.Model.Game;
 
 namespace RPG.API.Public.Middlewares
 {
@@ -14,16 +14,16 @@ namespace RPG.API.Public.Middlewares
             _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext httpContext, IStaffService staffService)
+        public async Task InvokeAsync(HttpContext httpContext, IPlayerService playerService)
         {
             string userIdClaimValue = httpContext.User.FindFirstValue("userId");
             if (!string.IsNullOrEmpty(userIdClaimValue))
             {
                 int userId = int.Parse(userIdClaimValue);
-                Staff? staff = await staffService.GetOne(userId);
-                if (staff == null) throw new HttpNotFoundException($"User with ID of {userId} does not exist!");
+                Player? player = await playerService.GetOne(userId);
+                if (player == null) throw new HttpNotFoundException($"User with ID of {userId} does not exist!");
 
-                httpContext.Features.Set(staff);
+                httpContext.Features.Set(player);
             }
 
             await _next(httpContext);

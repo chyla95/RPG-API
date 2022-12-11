@@ -1,4 +1,5 @@
 ﻿using RPG.API.Public.Utilities.Wrappers;
+using RPG.Domain.Model.Game;
 using RPG.Domain.Model.General;
 
 namespace RPG.API.Public.Utilities
@@ -12,9 +13,9 @@ namespace RPG.API.Public.Utilities
             _httpContextWrapper = httpContextWrapper;
         }
 
-        public Staff GetCurrentUser()
+        public Player GetCurrentUser()
         {
-            Staff? user = _httpContextWrapper.GetFeature<Staff>();
+            Player? user = _httpContextWrapper.GetFeature<Player>();
             if (user == null) throw new Exception("Could not access current user data!");
 
             return user;

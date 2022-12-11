@@ -15,19 +15,19 @@ namespace RPG.Infrastructure.Services
 
         public async Task<IEnumerable<Player>> GetMany()
         {
-            IEnumerable<Player> player = await _unitOfWork.PlayerRepository.GetMany();
+            IEnumerable<Player> player = await _unitOfWork.PlayerRepository.GetMany("Characters, Characters.Class, Characters.Weapon");
             return player;
         }
 
         public async Task<Player?> GetOne(int id)
         {
-            Player? player = await _unitOfWork.PlayerRepository.GetOne(u => u.Id == id);
+            Player? player = await _unitOfWork.PlayerRepository.GetOne(u => u.Id == id, "Characters, Characters.Class, Characters.Weapon");
             return player;
         }
 
         public async Task<Player?> GetOne(string email)
         {
-            Player? player = await _unitOfWork.PlayerRepository.GetOne(u => u.Email == email);
+            Player? player = await _unitOfWork.PlayerRepository.GetOne(u => u.Email == email, "Characters, Characters.Class, Characters.Weapon");
             return player;
         }
 
